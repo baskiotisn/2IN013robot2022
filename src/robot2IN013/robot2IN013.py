@@ -24,7 +24,7 @@ class Robot2IN013:
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE      = WHEEL_DIAMETER   * math.pi # perimetre de la roue (mm)
     
-    def __init__(self,nb_img=10,fps=25,resolution=(640,480)):
+    def __init__(self,nb_img=10,fps=25,resolution=(640,480),servo_port="SERVO1"):
         """ 
             Initialise le robot
             :resolution: resolution de la camera
@@ -37,14 +37,9 @@ class Robot2IN013:
         self.resolution = resolution
         self.servo = None
         try:
-            self.servo = Servo("SERVO1",self._gpg)
+            self.servo = Servo(servo_port,self._gpg)
         except Exception as e:
-            pass
-        if self.servo is None:
-                try:
-                    self.servo = Servo("SERVO2",self._gpg)
-                except Exception as e:
-                    print("Servo not found") 
+               pass
         try:
             self.distanceSensor = ds_sensor.DistanceSensor()
         except Exception as e:
