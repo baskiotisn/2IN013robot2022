@@ -25,29 +25,29 @@ class Robot2IN013:
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE      = WHEEL_DIAMETER   * math.pi # perimetre de la roue (mm)
     
-    def __init__(self,nb_img=10,fps=25,resolution=None,servoPort = "SERVO1",motionPort="AD1"):
+    def __init__(self,nb_img=10,fps=25,resolution=None):
         """ 
             Initialise le robot
             :resolution: resolution de la camera
-            :servoPort: port du servo (SERVO1 ou SERVO2)
-            :motionPort: port pour l'accelerometre (AD1 ou AD2)
         """
 
         self._gpg= EasyGoPiGo3()
         self.fps=fps
         self._img_queue = None
         self.nb_img = nb_img
+        self.resolution = resolution
+	self.servo = None
         try:
-            self.camera = picamera.PiCamera()
-            if resolution:
-                self.camera.resolution = resolution
+            self.servo = Servo("SERVO1",self._gpg)
         except Exception as e:
-            print("Camera not found",e)
-        try:
-            self.servo = Servo(servoPort,self._gpg)
-        except Exception as e:
-            print("Servo not found",e)
-        try:
+            pass
+	if self.servo is None:
+		try:
+       			self.servo = Servo("SERVO2",self._gpg)
+		except Exception as e:
+			print("Servo not found")
+	 
+	try:
             self.distanceSensor = ds_sensor.DistanceSensor()
         except Exception as e:
             print("Distance Sensor not found",e)
