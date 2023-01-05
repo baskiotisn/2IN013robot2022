@@ -3,7 +3,6 @@ import math
 from easygopigo3 import EasyGoPiGo3,Servo,DistanceSensor,MotionSensor
 import picamera
 from io import BytesIO
-from PIL import Image
 from di_sensors import distance_sensor as ds_sensor
 from di_sensors import  inertial_measurement_unit as imu
 import threading
@@ -25,7 +24,7 @@ class Robot2IN013:
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE      = WHEEL_DIAMETER   * math.pi # perimetre de la roue (mm)
     
-    def __init__(self,nb_img=10,fps=25,resolution=None):
+    def __init__(self,nb_img=10,fps=25,resolution=(640,480)):
         """ 
             Initialise le robot
             :resolution: resolution de la camera
@@ -36,18 +35,17 @@ class Robot2IN013:
         self._img_queue = None
         self.nb_img = nb_img
         self.resolution = resolution
-	self.servo = None
+        self.servo = None
         try:
             self.servo = Servo("SERVO1",self._gpg)
         except Exception as e:
             pass
-	if self.servo is None:
-		try:
-       			self.servo = Servo("SERVO2",self._gpg)
-		except Exception as e:
-			print("Servo not found")
-	 
-	try:
+        if self.servo is None:
+                try:
+                    self.servo = Servo("SERVO2",self._gpg)
+                except Exception as e:
+                    print("Servo not found") 
+        try:
             self.distanceSensor = ds_sensor.DistanceSensor()
         except Exception as e:
             print("Distance Sensor not found",e)
@@ -144,7 +142,7 @@ class Robot2IN013:
                 camera.start_preview()
                 i=0
                 while self._recording:
-                    time.sleep(1/self.fps_camera)
+                    time.sleep(1/self.fps)
                     out = np.zeros((self.resolution[1],self.resolution[0],3),dtype=np.uint8)
                     camera.capture(out,'rgb',use_video_port=True)
                     self._img_queue.append((out,time.time()))
