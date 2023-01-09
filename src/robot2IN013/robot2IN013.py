@@ -10,7 +10,7 @@ import threading
 from collections import deque
 import numpy as np
 
-class Robot2I013:
+class Robot2IN013:
     """ 
     Classe d'encapsulation du robot et des senseurs.
     Constantes disponibles : 

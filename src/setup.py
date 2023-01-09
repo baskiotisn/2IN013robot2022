@@ -17,7 +17,7 @@ except IOError:
 from setuptools import setup, find_packages
 
 setup(
-    name = "robot2I013",
+    name = "robot2IN013",
     version = "1.2022.0",
 
     description = "Module pour le controleur du Robot GoPiGo3 pour le cours 2IN013-Robot",
