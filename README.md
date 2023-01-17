@@ -1,7 +1,8 @@
 # 2IN013 Groupe 3 - Projet Robotique 2022-2023
 
-    Emails : (nicolas.baskiotis|olivier.sigaud) [@] sorbonne-universite.fr
-    Template Trello pour Scrum/Agile : https://trello.com/b/OjUJheXD/2i013-template
+* Emails : (nicolas.baskiotis|olivier.sigaud) [@] sorbonne-universite.fr
+    
+* Template Trello pour Scrum/Agile : [https://trello.com/b/OjUJheXD/2i013-template](https://trello.com/b/OjUJheXD/2i013-template)
 
 Se connecter au robot
 
